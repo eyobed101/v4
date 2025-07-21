@@ -2,12 +2,24 @@ const config = require('./src/config');
 
 module.exports = {
   siteMetadata: {
-    title: 'Brittany Chiang',
+    title: 'Eyobed Elias',
     description:
-      'Brittany Chiang is a software engineer who specializes in building (and occasionally designing) exceptional digital experiences.',
-    siteUrl: 'https://brittanychiang.com', // No trailing slash allowed!
+      'Eyobed Elias is a seasoned **Software Engineer, Cybersecurity Researcher, and CTO** specializing in building secure, high-impact digital solutions. ' +
+      'As a **Senior Developer** at Tripways PLC, he leads cutting-edge tech initiatives, while his contributions to **national cybersecurity projects** fortify Ethiopia\'s digital resilience. ' +
+      'Beyond code, Eyobed is a **reformed theology enthusiast** and a musician, blending logic and creativity in everything he does. ' +
+      'Explore his portfolio for insights on secure software, startup leadership, and the intersection of tech and faith.',
+    siteUrl: 'https://eyobedelias.net.et', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@bchiang7',
+    twitterUsername: '@eyobedelias',
+    keywords: [
+      'Cybersecurity Developer',
+      'Software Engineer Ethiopia',
+      'CTO Tripways',
+      'Reformed Theology Enthusiast',
+      'National Projects Researcher',
+      'Secure Software Development',
+      'Ethiopian Tech Leader',
+    ],
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -21,8 +33,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'Brittany Chiang',
-        short_name: 'Brittany Chiang',
+        name: 'Eyobed Elias',
+        short_name: 'Eyobed Elias',
         start_url: '/',
         background_color: config.colors.darkNavy,
         theme_color: config.colors.navy,

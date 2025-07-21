@@ -1,13 +1,15 @@
 ---
-date: '2018-05-14'
-title: 'Lead Engineer'
-company: 'Upstatement'
-location: 'Boston, MA'
-range: 'May 2018 - Present'
-url: 'https://www.upstatement.com/'
+date: '2022-01-01'
+title: 'Senior Application Software Developer'
+company: 'INSA'
+location: 'Addis Ababa, Ethiopia'
+range: '2022 - Present'
+url: 'https://insa.gov.et/'
 ---
 
-- Deliver high-quality, robust production code for a diverse array of projects for clients including Harvard Business School, Everytown for Gun Safety, Pratt Institute, Koala Health, Vanderbilt University, The 19th News, and more
-- Work alongside creative directors to lead the research, development, and architecture of technical solutions to fulfill business requirements
-- Collaborate with designers, project managers, and other engineers to transform creative concepts into production realities for clients and stakeholders
-- Provide leadership within engineering department through close collaboration, knowledge shares, and mentorship
+- Developed and maintained core features for enterprise-level antivirus software as part of an on-site development team
+- Improved antivirus engine detection rates by 30% through research and implementation of machine learning solutions
+- Designed and implemented a web-based subscription management system to enhance user experience and operational efficiency
+- Collaborated with cross-functional teams to optimize software performance and implement security best practices
+- Conducted technical research on emerging cybersecurity threats and mitigation strategies
+- Mentored junior developers and contributed to code review processes to maintain high development standards
