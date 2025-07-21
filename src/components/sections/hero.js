@@ -44,6 +44,12 @@ const StyledHeroSection = styled.section`
     font-weight: 600;
     color: var(--lightest-slate);
   }
+  .big-heading-two {
+    font-size: clamp(20px, 5vw, 60px);
+    margin: 0;
+    font-weight: 600;
+    color: var(--lightest-slate);
+  }
 
   p {
     margin: 20px 0 0;
@@ -163,8 +169,8 @@ const Hero = () => {
 
   const one = <h1 className="animated-heading">Hi, my name is</h1>;
   const two = <AnimatedText text="Eyobed Elias." className="big-heading" as="h2" />;
-  const three = <AnimatedText text="I build secure digital" className="big-heading" as="h3" />;
-  const four = <AnimatedText text="experiences." className="big-heading" as="h3" />;
+  const three = <AnimatedText text="I build secure digital" className="big-heading-two" as="h3" />;
+  const four = <AnimatedText text="experiences." className="big-heading-two" as="h3" />;
   const five = (
     <p>
       I'm a <strong>software developer</strong> and <strong>CTO</strong> specializing in building
