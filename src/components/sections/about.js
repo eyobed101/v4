@@ -6,52 +6,111 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledAboutSection = styled.section`
-  max-width: 900px;
+  max-width: 1000px;
+  margin: 0 auto;
 
   .inner {
     display: grid;
     grid-template-columns: 3fr 2fr;
-    grid-gap: 50px;
+    gap: 60px;
+    align-items: start; /* Changed to align items at top */
 
     @media (max-width: 768px) {
       display: block;
     }
   }
 `;
+
 const StyledText = styled.div`
-  ul.skills-list {
+  .about-content {
+    p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      color: var(--light-slate);
+    }
+
+    a {
+      ${({ theme }) => theme.mixins.link};
+      font-weight: 500;
+    }
+
+    .highlight {
+      color: var(--green);
+      font-weight: 500;
+    }
+  }
+
+  .skills-container {
+    margin-top: 2rem;
+  }
+
+  .skills-group {
+    margin-bottom: 2rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .skills-title {
+    display: inline-block;
+    font-size: var(--fz-sm);
+    font-family: var(--font-mono);
+    color: var(--green);
+    margin-bottom: 1rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--green-tint);
+  }
+
+  .skills-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    grid-gap: 0 10px;
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 10px;
     padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
+    margin: 0;
     list-style: none;
+    overflow: hidden;
 
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, minmax(140px, 1fr));
+    }
+  }
 
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
+  .skill-item {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    font-size: var(--fz-sm);
+    font-family: var(--font-mono);
+    color: var(--slate);
+    transition: var(--transition);
+
+    &:before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: var(--fz-md);
+      line-height: 1;
+    }
+
+    &:hover {
+      color: var(--green);
+      transform: translateX(5px);
     }
   }
 `;
+
 const StyledPic = styled.div`
-  position: relative;
-  max-width: 300px;
+  position: sticky;
+  top: 100px; /* Adjust this value based on your header height */
+  max-width: 320px;
+  margin-left: auto;
 
   @media (max-width: 768px) {
-    margin: 50px auto 0;
+    position: relative;
+    top: auto;
+    margin: 40px auto 0;
     width: 70%;
   }
 
@@ -60,55 +119,44 @@ const StyledPic = styled.div`
     display: block;
     position: relative;
     width: 100%;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     background-color: var(--green);
+    transition: var(--transition);
+    overflow: hidden;
 
-    &:hover,
-    &:focus {
-      outline: 0;
-      transform: translate(-4px, -4px);
-
-      &:after {
-        transform: translate(8px, 8px);
-      }
+    &:hover {
+      transform: translate(-8px, -8px);
+      box-shadow: 8px 8px 0 var(--green-tint);
 
       .img {
         filter: none;
-        mix-blend-mode: normal;
+      }
+
+      &:after {
+        transform: translate(12px, 12px);
       }
     }
 
     .img {
       position: relative;
-      border-radius: var(--border-radius);
+      border-radius: var(--border-radius-lg);
       mix-blend-mode: multiply;
       filter: grayscale(100%) contrast(1);
-      transition: var(--transition);
+      transition: var(--transition-long);
     }
 
-    &:before,
     &:after {
       content: '';
       display: block;
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: var(--border-radius);
-      transition: var(--transition);
-    }
-
-    &:before {
-      top: 0;
-      left: 0;
-      background-color: var(--navy);
-      mix-blend-mode: screen;
-    }
-
-    &:after {
       border: 2px solid var(--green);
-      top: 14px;
-      left: 14px;
+      border-radius: var(--border-radius-lg);
+      top: 20px;
+      left: 20px;
       z-index: -1;
+      transition: var(--transition-long);
     }
   }
 `;
@@ -125,59 +173,88 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
+  const skillCategories = [
+    {
+      title: 'Languages',
+      items: ['JavaScript (ES6+)', 'TypeScript', 'Python', 'PHP'],
+    },
+    {
+      title: 'Frontend',
+      items: ['React.js', 'Next.js', 'React Native'],
+    },
+    {
+      title: 'Backend',
+      items: ['Node.js (Express/NestJS)', 'Laravel', 'Flask'],
+    },
+    {
+      title: 'Databases',
+      items: ['MongoDB', 'MySQL', 'PostgreSQL', 'PrismaORM'],
+    },
+    {
+      title: 'DevOps',
+      items: ['RabbitMQ', 'Docker', 'CI/CD', 'AWS'],
+    },
+    {
+      title: 'Security',
+      items: ['HMAC Auth', 'OAuth 2.0', 'JWT'],
+    },
+  ];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
-      <h2 className="numbered-heading">About Me</h2>
+      <h2 className="numbered-heading">
+        <span className="numbered-prefix">01. </span>
+        About Me
+      </h2>
 
       <div className="inner">
         <StyledText>
-          <div>
+          <div className="about-content">
             <p>
-              Hello! My name is Brittany and I enjoy creating things that live on the internet. My
-              interest in web development started back in 2012 when I decided to try editing custom
-              Tumblr themes — turns out hacking together a custom reblog button taught me a lot
-              about HTML &amp; CSS!
+              Hello! I’m Eyobed—a developer who crafts digital experiences with purpose. My
+              fascination began when I first merged logic and creativity through code. Today, I
+              build full-stack applications that balance elegant interfaces with resilient backends,
+              fueled by a love for problem-solving and a drive to make technology meaningful.
             </p>
 
             <p>
               Fast-forward to today, and I’ve had the privilege of working at{' '}
-              <a href="https://us.mullenlowe.com/">an advertising agency</a>,{' '}
-              <a href="https://starry.com/">a start-up</a>,{' '}
+              <a href="https://insa.gov.et/">national cybersecurity agency</a>,{' '}
+              <a href="https://tripways.com.et/">a start-up</a>,{' '}
               <a href="https://www.apple.com/">a huge corporation</a>, and{' '}
               <a href="https://scout.camd.northeastern.edu/">a student-led design studio</a>. My
               main focus these days is building accessible, inclusive products and digital
-              experiences at <a href="https://upstatement.com/">Upstatement</a> for a variety of
-              clients.
+              experiences.
             </p>
 
-            <p>
-              I also recently{' '}
-              <a href="https://www.newline.co/courses/build-a-spotify-connected-app">
-                launched a course
-              </a>{' '}
-              that covers everything you need to build a web app with the Spotify API using Node
-              &amp; React.
-            </p>
-
-            <p>Here are a few technologies I’ve been working with recently:</p>
+            <p>Here are some technologies I work with:</p>
           </div>
 
-          <ul className="skills-list">
-            {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-          </ul>
+          <div className="skills-container">
+            {skillCategories.map((category, index) => (
+              <div key={index} className="skills-group">
+                <h4 className="skills-title">{category.title}</h4>
+                <ul className="skills-list">
+                  {category.items.map((skill, skillIndex) => (
+                    <li key={skillIndex} className="skill-item">
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </StyledText>
 
         <StyledPic>
           <div className="wrapper">
             <StaticImage
               className="img"
-              src="../../images/me.jpg"
-              width={500}
-              quality={95}
-              formats={['AUTO', 'WEBP', 'AVIF']}
-              alt="Headshot"
+              src="../../images/me.png"
+              width={600}
+              quality={100}
+              formats={['WEBP', 'AVIF']}
+              alt="Eyobed Elias - Full Stack Developer"
             />
           </div>
         </StyledPic>
