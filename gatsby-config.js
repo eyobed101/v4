@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: 'Eyobed Elias',
     description:
-      'Eyobed Elias is a seasoned **Software Engineer, Cybersecurity Researcher, and CTO** specializing in building secure, high-impact digital solutions. ' +
+      'Eyobed Elias is a seasoned **Software Developer, Cybersecurity Researcher, and CTO** specializing in building secure, high-impact digital solutions. ' +
       'As a **Senior Developer** at Tripways PLC, he leads cutting-edge tech initiatives, while his contributions to **national cybersecurity projects** fortify Ethiopia\'s digital resilience. ' +
       'Beyond code, Eyobed is a **reformed theology enthusiast** and a musician, blending logic and creativity in everything he does. ' +
       'Explore his portfolio for insights on secure software, startup leadership, and the intersection of tech and faith.',

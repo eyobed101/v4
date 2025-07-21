@@ -90,7 +90,9 @@ const AnimatedText = ({ text, className, as: Component = 'h2' }) => {
     }
 
     const element = textRef.current;
-    if (!element) {return;}
+    if (!element) {
+      return;
+    }
 
     element.innerHTML = '';
     const wordsAndSpaces = text.split(/(\s+)/);
@@ -152,7 +154,9 @@ const Hero = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) {return;}
+    if (prefersReducedMotion) {
+      return;
+    }
     const timeout = setTimeout(() => setIsMounted(true), navDelay);
     return () => clearTimeout(timeout);
   }, []);
@@ -163,7 +167,7 @@ const Hero = () => {
   const four = <AnimatedText text="experiences." className="big-heading" as="h3" />;
   const five = (
     <p>
-      I'm a <strong>software engineer</strong> and <strong>CTO</strong> specializing in building
+      I'm a <strong>software developer</strong> and <strong>CTO</strong> specializing in building
       secure, scalable systems across multiple platforms. Currently leading technical innovation at{' '}
       <a href="https://tripways.com.et/" target="_blank" rel="noreferrer">
         Tripways
