@@ -1,101 +1,167 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { navDelay, loaderDelay } from '@utils';
 import { usePrefersReducedMotion } from '@hooks';
+import anime from 'animejs';
 
 const StyledHeroSection = styled.section`
   ${({ theme }) => theme.mixins.flexCenter};
   flex-direction: column;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
+  height: 100vh;
+  padding: 0;
 
-  @media (max-width: 480px) {
-    padding: 0 10px;
+  @media (max-height: 700px) and (min-width: 700px), (max-width: 360px) {
+    height: auto;
+    padding-top: var(--nav-height);
   }
 
   h1 {
-    margin: 0 0 20px 4px;
+    margin: 0 0 30px 4px;
     color: var(--green);
     font-family: var(--font-mono);
     font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
     font-weight: 400;
+
+    @media (max-width: 480px) {
+      margin: 0 0 20px 2px;
+    }
+  }
+
+  h2,
+  h3 {
+    margin-top: 5px;
+    color: var(--slate);
+    line-height: 0.9;
   }
 
   .big-heading {
-    margin: 0;
-    line-height: 1.1;
-  }
-
-  h2.big-heading {
     font-size: clamp(40px, 8vw, 80px);
+    margin: 0;
+    font-weight: 600;
     color: var(--lightest-slate);
-  }
-
-  h3.big-heading {
-    margin-top: 10px;
-    font-size: clamp(20px, 4vw, 40px);
-    color: var(--slate);
   }
 
   p {
     margin: 20px 0 0;
     max-width: 540px;
-    color: var(--slate);
-  }
-
-  a {
-    ${({ theme }) => theme.mixins.link};
-    color: var(--green);
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   .email-link {
     ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 40px;
+    margin-top: 50px;
   }
 
-  .hero-bg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 40%;
-    background: linear-gradient(to bottom right, rgba(100, 255, 218, 0.07), transparent);
-    z-index: -1;
-    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-    opacity: 0.5;
+  .fadeup-enter {
+    opacity: 0.01;
+    transform: translateY(20px);
+    transition: opacity 300ms var(--easing), transform 300ms var(--easing);
+  }
 
-    @media (max-width: 768px) {
-      width: 60%;
-      opacity: 0.3;
-    }
+  .fadeup-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  .char {
+    display: inline-block;
+    opacity: 0;
+  }
+
+  .space {
+    display: inline-block;
+    width: 0.1em;
   }
 `;
+
+const AnimatedText = ({ text, className, as: Component = 'h2' }) => {
+  const textRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      if (textRef.current) {
+        textRef.current.textContent = text;
+      }
+      return;
+    }
+
+    const element = textRef.current;
+    if (!element) {return;}
+
+    element.innerHTML = '';
+    const wordsAndSpaces = text.split(/(\s+)/);
+
+    wordsAndSpaces.forEach((segment, segmentIndex) => {
+      if (segment === ' ') {
+        const spaceSpan = document.createElement('span');
+        spaceSpan.className = 'space';
+        spaceSpan.innerHTML = '&nbsp;';
+        element.appendChild(spaceSpan);
+      } else if (segment.trim() !== '') {
+        segment.split('').forEach(char => {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'char';
+          charSpan.textContent = char;
+          element.appendChild(charSpan);
+        });
+
+        if (segmentIndex < wordsAndSpaces.length - 1 && wordsAndSpaces[segmentIndex + 1] === ' ') {
+          const spaceSpan = document.createElement('span');
+          spaceSpan.className = 'space';
+          spaceSpan.innerHTML = '&nbsp;';
+          element.appendChild(spaceSpan);
+        }
+      }
+    });
+
+    anime
+      .timeline({ loop: false })
+      .add({
+        targets: element.querySelectorAll('.char'),
+        opacity: [0, 1],
+        translateX: [20, 0],
+        duration: 800,
+        delay: (el, i) => 50 * i,
+        easing: 'easeOutExpo',
+      })
+      .add({
+        targets: element.querySelectorAll('.space'),
+        opacity: [0, 1],
+        duration: 200,
+        easing: 'linear',
+        offset: '-=600',
+      });
+  }, [text, prefersReducedMotion]);
+
+  return <Component ref={textRef} className={className} />;
+};
+
+// ✅ PropTypes for AnimatedText
+AnimatedText.propTypes = {
+  text: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  as: PropTypes.string,
+};
 
 const Hero = () => {
   const [isMounted, setIsMounted] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      return;
-    }
-
+    if (prefersReducedMotion) {return;}
     const timeout = setTimeout(() => setIsMounted(true), navDelay);
     return () => clearTimeout(timeout);
   }, []);
 
-  const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Eyobed Elias.</h2>;
-  const three = <h3 className="big-heading">I build secure digital experiences.</h3>;
-  const four = (
+  const one = <h1 className="animated-heading">Hi, my name is</h1>;
+  const two = <AnimatedText text="Eyobed Elias." className="big-heading" as="h2" />;
+  const three = <AnimatedText text="I build secure digital" className="big-heading" as="h3" />;
+  const four = <AnimatedText text="experiences." className="big-heading" as="h3" />;
+  const five = (
     <p>
       I'm a <strong>software engineer</strong> and <strong>CTO</strong> specializing in building
       secure, scalable systems across multiple platforms. Currently leading technical innovation at{' '}
@@ -109,18 +175,16 @@ const Hero = () => {
       .
     </p>
   );
-  const five = (
+  const six = (
     <a className="email-link" href="mailto:your-email@example.com" target="_blank" rel="noreferrer">
       Get In Touch
     </a>
   );
 
-  const items = [one, two, three, four, five];
+  const items = [one, two, three, four, five, six];
 
   return (
-    <StyledHeroSection id="hero">
-      <div className="hero-bg" />
-
+    <StyledHeroSection>
       {prefersReducedMotion ? (
         <>
           {items.map((item, i) => (
@@ -131,7 +195,7 @@ const Hero = () => {
         <TransitionGroup component={null}>
           {isMounted &&
             items.map((item, i) => (
-              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
+              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay} appear>
                 <div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
               </CSSTransition>
             ))}
