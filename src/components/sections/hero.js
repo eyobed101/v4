@@ -1,10 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { navDelay, loaderDelay } from '@utils';
 import { usePrefersReducedMotion } from '@hooks';
 import anime from 'animejs';
+
+// New continuous wave animation for text
+const waveAnimation = keyframes`
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(5px) rotate(-2deg);
+  }
+`;
 
 const StyledHeroSection = styled.section`
   ${({ theme }) => theme.mixins.flexCenter};
@@ -48,7 +65,17 @@ const StyledHeroSection = styled.section`
     font-size: clamp(20px, 5vw, 60px);
     margin: 0;
     font-weight: 600;
-    color: var(--lightest-slate);
+    color: var(--green);
+  }
+
+  .wave-text {
+    display: inline-block;
+  }
+
+  .wave-char {
+    display: inline-block;
+    animation: ${waveAnimation} 3s ease-in-out infinite;
+    animation-delay: calc(var(--char-index) * 0.1s);
   }
 
   p {
@@ -82,7 +109,54 @@ const StyledHeroSection = styled.section`
     width: 0.1em;
   }
 `;
+const WaveText = ({ text, className, as: Component = 'h3' }) => {
+  const textRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      if (textRef.current) {
+        textRef.current.textContent = text;
+      }
+      return;
+    }
+
+    const element = textRef.current;
+    if (!element) {
+      return;
+    }
+
+    element.innerHTML = '';
+
+    text.split('').forEach((char, index) => {
+      const charSpan = document.createElement('span');
+      charSpan.className = 'wave-char';
+      charSpan.style.setProperty('--char-index', index);
+      charSpan.textContent = char === ' ' ? '\u00A0' : char;
+      element.appendChild(charSpan);
+    });
+
+    // Add continuous pulsing effect
+    anime({
+      targets: element.querySelectorAll('.wave-char'),
+      scale: [1, 1.1, 1],
+      opacity: [0.8, 1, 0.8],
+      duration: 3000,
+      delay: anime.stagger(100),
+      easing: 'easeInOutSine',
+      loop: true,
+      direction: 'alternate',
+    });
+  }, [text, prefersReducedMotion]);
+
+  return <Component ref={textRef} className={`${className} wave-text`} />;
+};
+
+WaveText.propTypes = {
+  text: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  as: PropTypes.string,
+};
 const AnimatedText = ({ text, className, as: Component = 'h2' }) => {
   const textRef = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -169,7 +243,7 @@ const Hero = () => {
 
   const one = <h1 className="animated-heading">Hi, my name is</h1>;
   const two = <AnimatedText text="Eyobed Elias." className="big-heading" as="h2" />;
-  const three = <AnimatedText text="I build secure digital" className="big-heading-two" as="h3" />;
+  const three = <WaveText text="I build secure digital" className="big-heading-two" as="h3" />;
   const four = <AnimatedText text="experiences." className="big-heading-two" as="h3" />;
   const five = (
     <p>
