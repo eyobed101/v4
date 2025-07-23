@@ -109,6 +109,29 @@ const StyledHeroSection = styled.section`
     width: 0.1em;
   }
 `;
+// Typewriter animation styles
+const cursorAnimation = keyframes`
+  from { border-right-color: rgba(255, 255, 255, 0.75); }
+  to { border-right-color: transparent; }
+`;
+
+const typewriterAnimation = keyframes`
+  from { width: 0; }
+  to { width: 100%; }
+`;
+
+const TypewriterText = styled.h3`
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+  letter-spacing: 0.05em;
+  animation: ${typewriterAnimation} 4s steps(40) 1s 1 normal both,
+    ${cursorAnimation} 750ms steps(40) infinite normal;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+`;
+
 const WaveText = ({ text, className, as: Component = 'h3' }) => {
   const textRef = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -229,6 +252,26 @@ AnimatedText.propTypes = {
   as: PropTypes.string,
 };
 
+const TypewriterComponent = ({ text, className, as: Component = 'h3' }) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <Component className={className}>{text}</Component>;
+  }
+
+  return (
+    <TypewriterText as={Component} className={className}>
+      {text}
+    </TypewriterText>
+  );
+};
+
+TypewriterComponent.propTypes = {
+  text: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  as: PropTypes.string,
+};
+
 const Hero = () => {
   const [isMounted, setIsMounted] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -243,7 +286,9 @@ const Hero = () => {
 
   const one = <h1 className="animated-heading">Hi, my name is</h1>;
   const two = <AnimatedText text="Eyobed Elias." className="big-heading" as="h2" />;
-  const three = <WaveText text="I build secure digital" className="big-heading-two" as="h3" />;
+  const three = (
+    <TypewriterComponent text="I build secure digital" className="big-heading-two" as="h3" />
+  );
   const four = <AnimatedText text="experiences." className="big-heading-two" as="h3" />;
   const five = (
     <p>
