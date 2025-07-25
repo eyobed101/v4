@@ -1,15 +1,15 @@
 ---
 date: '1'
-title: 'Hiking Event Organizing Platform'
-cover: './halcyon.png'
-github: 'https://github.com/bchiang7/halcyon-site'
-external: 'https://hike.tripways.com.et/'
+title: 'Real-Time Whiteboard Collaboration Platform'
+cover: './canvas.png'
+github: 'https://github.com/eyobed101/whiteboard-app'
+external: 'https://whiteboard-app-bice.vercel.app'
 tech:
   - TypeScript
-  - React
-  - Redux
+  - Next Js
   - Tailwind CSS
   - Node JS (express)
+  - Socket.IO
 ---
 
-A simple platform for HikeHub organizers to manage events, track bookings, view stats, and chat with hikers. Organizers can also update their profiles to stay visible and connected.
+Users can draw, write, and brainstorm together on a shared canvas with instant updates powered by WebSockets.

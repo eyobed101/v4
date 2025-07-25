@@ -109,27 +109,29 @@ const StyledHeroSection = styled.section`
     width: 0.1em;
   }
 `;
-// Typewriter animation styles
-const cursorAnimation = keyframes`
-  from { border-right-color: rgba(255, 255, 255, 0.75); }
-  to { border-right-color: transparent; }
-`;
 
 const typewriterAnimation = keyframes`
   from { width: 0; }
   to { width: 100%; }
 `;
 
-const TypewriterText = styled.h3`
-  position: relative;
+const cursorAnimation = keyframes`
+  0% { border-right-color: rgba(255, 255, 255, 0.75); }
+  100% { border-right-color: transparent; }
+`;
+
+const LoopingTypewriter = styled.h3`
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  margin: 0;
-  letter-spacing: 0.05em;
-  animation: ${typewriterAnimation} 4s steps(40) 1s 1 normal both,
-    ${cursorAnimation} 750ms steps(40) infinite normal;
   border-right: 2px solid rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.05em;
+  animation: ${typewriterAnimation} 4s steps(40) 1s forwards,
+    ${cursorAnimation} 750ms steps(40) infinite;
+
+  &.reset {
+    animation: none;
+  }
 `;
 
 const WaveText = ({ text, className, as: Component = 'h3' }) => {
@@ -253,16 +255,31 @@ AnimatedText.propTypes = {
 };
 
 const TypewriterComponent = ({ text, className, as: Component = 'h3' }) => {
+  const [key, setKey] = useState(0);
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (prefersReducedMotion) {return;}
+
+    const interval = setInterval(() => {
+      // Force React to re-render and restart the animation
+      setKey(prevKey => prevKey + 1);
+    }, 6000); // Restart every 6s (duration + pause)
+
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
 
   if (prefersReducedMotion) {
     return <Component className={className}>{text}</Component>;
   }
 
   return (
-    <TypewriterText as={Component} className={className}>
+    <LoopingTypewriter
+      as={Component}
+      key={key} // changes to trigger animation reset
+      className={className}>
       {text}
-    </TypewriterText>
+    </LoopingTypewriter>
   );
 };
 
