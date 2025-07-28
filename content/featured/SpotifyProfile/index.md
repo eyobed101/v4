@@ -1,15 +1,18 @@
 ---
 date: '2'
-title: 'Spotify Profile'
-cover: './demo.png'
-github: 'https://github.com/bchiang7/spotify-profile'
-external: 'https://spotify-profile.herokuapp.com/'
+title: 'Network Intrusion Detection System'
+cover: './nids1.png'
+github: 'https://github.com/eyobed101/network-ids'
+external: 'https://network-ids-teal.vercel.app/dashboard'
 tech:
-  - React
-  - Styled Components
-  - Express
-  - Spotify API
-  - Heroku
+  - Next.js
+  - TypeScript
+  - Tailwind CSS
+  - shadcn/ui
+  - ECharts
+  - Node.js
+  - Socket.IO
+  - MongoDB
 ---
 
-A web app for visualizing personalized Spotify data. View your top artists, top tracks, recently played tracks, and detailed audio information about each track. Create and save new playlists of recommended tracks based on your existing playlists and more.
+A real-time web application for detecting and visualizing potential network threats and anomalies. Built with modern technologies, the system captures, analyzes, and presents network packet data using advanced visualizations. View live dashboards of detected intrusions, suspicious IP behavior, protocol breakdowns, and traffic volume trends.
