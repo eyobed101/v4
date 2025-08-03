@@ -259,7 +259,9 @@ const TypewriterComponent = ({ text, className, as: Component = 'h3' }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) {return;}
+    if (prefersReducedMotion) {
+      return;
+    }
 
     const interval = setInterval(() => {
       // Force React to re-render and restart the animation
