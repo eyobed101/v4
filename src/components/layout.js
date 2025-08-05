@@ -1,13 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { keyframes, ThemeProvider } from 'styled-components';
 import { Head, Loader, Nav, Social, Email, Footer } from '@components';
 import { GlobalStyle, theme } from '@styles';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  /* Apply animation with delay for children */
+  animation: ${fadeIn} 0.8s ease-out forwards;
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 const Layout = ({ children, location }) => {
@@ -61,7 +80,7 @@ const Layout = ({ children, location }) => {
           {isLoading && isHome ? (
             <Loader finishLoading={() => setIsLoading(false)} />
           ) : (
-            <StyledContent>
+            <StyledContent className="styled-content">
               <Nav isHome={isHome} />
               <Social isHome={isHome} />
               <Email isHome={isHome} />

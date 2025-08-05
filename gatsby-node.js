@@ -7,6 +7,25 @@
 const path = require('path');
 const _ = require('lodash');
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type MarkdownRemarkFrontmatter {
+      ios: String
+      android: String
+      slug: String
+      date: Date @dateformat
+      tags: [String]
+      # Add any other frontmatter fields you use
+    }
+    
+    type MarkdownRemark implements Node {
+      frontmatter: MarkdownRemarkFrontmatter
+    }
+  `;
+  createTypes(typeDefs);
+};
+
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
   const postTemplate = path.resolve(`src/templates/post.js`);
@@ -48,7 +67,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     createPage({
       path: node.frontmatter.slug,
       component: postTemplate,
-      context: {},
+      context: {
+        slug: node.frontmatter.slug,
+      },
     });
   });
 
@@ -66,9 +87,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 };
 
-// https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  // https://www.gatsbyjs.org/docs/debugging-html-builds/#fixing-third-party-modules
   if (stage === 'build-html' || stage === 'develop-html') {
     actions.setWebpackConfig({
       module: {

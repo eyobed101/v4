@@ -31,6 +31,8 @@ const GlobalStyle = createGlobalStyle`
     outline-offset: 3px;
   }
 
+  
+
   /*
     Remove default focus styles for mouse users ONLY if
     :focus-visible is supported on this platform.
