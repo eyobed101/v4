@@ -247,7 +247,6 @@ const AnimatedText = ({ text, className, as: Component = 'h2' }) => {
   return <Component ref={textRef} className={className} />;
 };
 
-// ✅ PropTypes for AnimatedText
 AnimatedText.propTypes = {
   text: PropTypes.string.isRequired,
   className: PropTypes.string,
