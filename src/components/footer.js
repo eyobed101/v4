@@ -77,7 +77,7 @@ const Footer = () => {
     if (process.env.NODE_ENV !== 'production') {
       return;
     }
-    fetch('https://api.github.com/repos/bchiang7/v4')
+    fetch('https://api.github.com/repos/eyobed101/v4')
       .then(response => response.json())
       .then(json => {
         const { stargazers_count, forks_count } = json;
@@ -110,14 +110,14 @@ const Footer = () => {
 
           {githubInfo.stars && githubInfo.forks && (
             <div className="github-stats">
-              <span>
+              {/* <span>
                 <Icon name="Star" />
                 <span>{githubInfo.stars.toLocaleString()}</span>
               </span>
               <span>
                 <Icon name="Fork" />
                 <span>{githubInfo.forks.toLocaleString()}</span>
-              </span>
+              </span> */}
             </div>
           )}
         </a>
