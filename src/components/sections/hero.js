@@ -315,7 +315,7 @@ const Hero = () => {
       <a href="https://tripways.com.et/" target="_blank" rel="noreferrer">
         Tripways
       </a>{' '}
-      while contributing to national cybersecurity at{' '}
+      while contributing to national cybersecurity systems at{' '}
       <a href="https://insa.gov.et/" target="_blank" rel="noreferrer">
         INSA
       </a>
