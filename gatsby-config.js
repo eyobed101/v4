@@ -9,7 +9,7 @@ module.exports = {
       'Beyond code, Eyobed is a **reformed theology enthusiast** and a musician, blending logic and creativity in everything he does. ' +
       'Explore his portfolio for insights on secure software, startup leadership, and the intersection of tech and faith.',
     siteUrl: 'https://eyobedelias.net.et', // No trailing slash allowed!
-    image: '/og.png', // Path to your image you placed in the 'static' folder
+    image: '/og2.png', // Path to your image you placed in the 'static' folder
     twitterUsername: '@eyobedelias',
     keywords: [
       'Cybersecurity Developer',
