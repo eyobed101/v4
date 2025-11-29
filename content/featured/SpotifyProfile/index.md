@@ -1,18 +1,21 @@
 ---
 date: '2'
-title: 'Network Intrusion Detection System'
+title: 'HikeHub'
 cover: './nids1.png'
-github: 'https://github.com/eyobed101/network-ids'
-external: 'https://network-ids-teal.vercel.app/dashboard'
+github: 'https://github.com/eyobed101'
+external: 'https://hikehub.tripways.et'
 tech:
-  - Next.js
   - TypeScript
-  - Tailwind CSS
-  - shadcn/ui
-  - ECharts
+  - React
+  - TailwindCSS
   - Node.js
+  - Express
+  - WebSockets
   - Socket.IO
-  - MongoDB
+  - FullCalendar
+  - Redux Toolkit
+  - ApexCharts
+  - Payment Integration
 ---
 
-A real-time web application for detecting and visualizing potential network threats and anomalies. Built with modern technologies, the system captures, analyzes, and presents network packet data using advanced visualizations. View live dashboards of detected intrusions, suspicious IP behavior, protocol breakdowns, and traffic volume trends.
+It syncs events to the mobile app, handles real-time bookings, participant tracking, payments, and engagement analytics via a Node.js with WebSocket support.

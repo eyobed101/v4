@@ -1,15 +1,18 @@
 ---
 date: '1'
-title: 'Real-Time Whiteboard Collaboration Platform'
+title: 'AlphaMail'
 cover: './canvas.png'
 github: 'https://github.com/eyobed101/whiteboard-app'
-external: 'https://whiteboard-app-bice.vercel.app'
+external: 'https://alphamail.ai'
 tech:
   - TypeScript
   - Next Js
+  - TanStack Query
   - Tailwind CSS
-  - Node JS (express)
+  - FastAPI
+  - Redis
+  - LLM
   - Socket.IO
 ---
 
-Users can draw, write, and brainstorm together on a shared canvas with instant updates powered by WebSockets.
+AlphaMail is an AI-powered email automation platform, and I worked on its end-to-end development to build advanced intelligent agent features.

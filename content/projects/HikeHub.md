@@ -1,22 +1,17 @@
 ---
 date: '2025-08-03'
-title: 'HikeHub Event Organizer Platform'
-github: 'https://github.com/eyobed101/private.git'
-external: 'https://hikehub.tripways.com.et'
+title: 'Real-Time Whiteboard Collaboration Platform'
+github: 'https://github.com/eyobed101/whiteboard-app'
+external: 'https://whiteboard-app-bice.vercel.app'
 tech:
   - TypeScript
-  - React
-  - TailwindCSS
-  - Node.js
-  - Express
-  - WebSockets
+  - Next Js
+  - Tailwind CSS
+  - Node JS (express)
   - Socket.IO
-  - FullCalendar
-  - Redux Toolkit
-  - ApexCharts
-  - Payment Integration
-company: 'HikeHub'
+
+company: 'Self-employed'
 showInProjects: true
 ---
 
-It syncs events to the mobile app, handles real-time bookings, participant tracking, payments, and engagement analytics via a Node.js with WebSocket support.
+Users can draw, write, and brainstorm together on a shared canvas with instant updates powered by WebSockets.
