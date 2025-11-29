@@ -102,8 +102,7 @@ const StyledText = styled.div`
 `;
 
 const StyledPic = styled.div`
-  position: sticky;
-  top: 100px; /* Adjust this value based on your header height */
+  position: relative;
   max-width: 320px;
   margin-left: auto;
 
@@ -112,6 +111,53 @@ const StyledPic = styled.div`
     top: auto;
     margin: 40px auto 0;
     width: 70%;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(10px, 20px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  .floating-object {
+    position: absolute;
+    background-color: var(--green-tint);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: float 6s ease-in-out infinite;
+    z-index: -1;
+  }
+
+  .floating-object:nth-child(1) {
+    width: 50px;
+    height: 50px;
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+  }
+
+  .floating-object:nth-child(2) {
+    width: 30px;
+    height: 30px;
+    top: 30%;
+    right: -15%;
+    animation-delay: 2s;
+    animation-duration: 8s;
+  }
+
+  .floating-object:nth-child(3) {
+    width: 40px;
+    height: 40px;
+    bottom: -5%;
+    left: 20%;
+    animation-delay: 4s;
+    animation-duration: 7s;
   }
 
   .wrapper {
@@ -244,6 +290,9 @@ const About = () => {
         </StyledText>
 
         <StyledPic>
+          <span className="floating-object" />
+          <span className="floating-object" />
+          <span className="floating-object" />
           <div className="wrapper">
             <StaticImage
               className="img"
