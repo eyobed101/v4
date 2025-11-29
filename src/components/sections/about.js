@@ -119,14 +119,16 @@ const StyledPic = styled.div`
     display: block;
     position: relative;
     width: 100%;
-    border-radius: var(--border-radius-lg);
     background-color: var(--green);
     transition: var(--transition);
     overflow: hidden;
+    clip-path: circle(50% at 50% 50%);
+    transition: all 0.5s ease-in-out;
 
     &:hover {
       transform: translate(-8px, -8px);
       box-shadow: 8px 8px 0 var(--green-tint);
+      clip-path: ellipse(60% 40% at 50% 50%);
 
       .img {
         filter: none;
@@ -139,7 +141,6 @@ const StyledPic = styled.div`
 
     .img {
       position: relative;
-      border-radius: var(--border-radius-lg);
       mix-blend-mode: multiply;
       filter: grayscale(100%) contrast(1);
       transition: var(--transition-long);
@@ -152,7 +153,6 @@ const StyledPic = styled.div`
       width: 100%;
       height: 100%;
       border: 2px solid var(--green);
-      border-radius: var(--border-radius-lg);
       top: 20px;
       left: 20px;
       z-index: -1;
